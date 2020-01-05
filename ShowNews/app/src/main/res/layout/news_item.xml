@@ -27,8 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:transitionName="image"
-                />
+                android:transitionName="image" />
 
             <ImageView
                 android:id="@+id/shadow_bottom"
@@ -38,11 +37,11 @@
                 android:src="@drawable/bottom_shadow"/>
 
             <ProgressBar
+                android:id="@+id/progressBar"
+                style="@android:style/Widget.Holo.ProgressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@android:style/Widget.Holo.ProgressBar"
-                android:layout_marginTop="70dp"
-                />
+                android:layout_marginTop="70dp" />
 
             <TextView
                 android:id="@+id/author"

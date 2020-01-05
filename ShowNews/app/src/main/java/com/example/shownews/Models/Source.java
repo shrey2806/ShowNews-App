@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 
-class Source {
+public class Source {
 
     @SerializedName("id")
     private String id;
