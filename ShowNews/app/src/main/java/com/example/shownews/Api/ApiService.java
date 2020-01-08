@@ -13,7 +13,13 @@ public interface ApiService {
         @Query("country")String country, @Query("apiKey")String key
     );
 
-
+    @GET("everything")
+    Call<News> fetchSearchedNews(
+        @Query("q")String keyword,
+        @Query("language")String language,
+        @Query("sortBy")String sortBy,
+        @Query("apiKey")String apiKey
+    );
 
 
 
