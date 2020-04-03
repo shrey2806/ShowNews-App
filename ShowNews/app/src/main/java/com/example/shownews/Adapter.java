@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -14,7 +15,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestFutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -28,12 +28,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
+    private OnItemClickListener myListener;
     private List<Article> articles;
     private Context context;
 
+
     public Adapter(List<Article> art,Context ctx){
-        this.articles=art;
-        this.context=ctx;
+        this.articles = art;
+        this.context = ctx;
+
     }
 
     @NonNull
@@ -41,7 +44,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.news_item,parent,false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,myListener);
     }
 
     @Override
@@ -91,14 +94,29 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         return articles.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public void setListener(OnItemClickListener onItemClickListener){
 
-        TextView title,author,desc,published_at,source;
+
+        this.myListener = onItemClickListener;
+    }
+
+    public interface  OnItemClickListener{
+        void onItaClick(View view,int position);
+    }
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
+
+        TextView title, author, desc ,published_at, source;
         ImageView image;
         ProgressBar progressBar;
+        OnItemClickListener onItemClickListener;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener itemClickListener) {
             super(itemView);
+
+            //dont't know the use of this line.
+            itemView.setOnClickListener(this);
 
             title = itemView.findViewById(R.id.title);
             author =itemView.findViewById(R.id.author);
@@ -108,9 +126,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
             image = itemView.findViewById(R.id.image);
             progressBar = itemView.findViewById(R.id.progressBar);
+
+            this.onItemClickListener = itemClickListener;
+
+
+
         }
 
 
+
+
+        @Override
+        public void onClick(View v) {
+
+            onItemClickListener.onItaClick(v,getAdapterPosition());
+        }
     }
 
 

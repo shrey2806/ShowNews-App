@@ -21,6 +21,4 @@ public interface ApiService {
         @Query("apiKey")String apiKey
     );
 
-
-
 }
